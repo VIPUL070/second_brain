@@ -22,4 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-config.js
+# Ignore the source config file
+src/config.ts
+
+# Ignore the compiled config file
+dist/config.js
+
