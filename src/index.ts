@@ -73,7 +73,8 @@ app.post('/api/v1/signin', async (req,res) => {
 
     const token = jwt.sign({userId: user._id }, JWT_SECRET);
     res.status(200).json({
-        message: "User logged in successfully"
+        message: "User logged in successfully",
+        token: token
     })
 
 })
