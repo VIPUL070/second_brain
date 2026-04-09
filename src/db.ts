@@ -28,17 +28,15 @@ const contentSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: contentTypes,
-        required: true
     },
     title: {
         type: String,
         required: true
     },
-    tags: {
+    tags: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tag",
-        required: true
-    },
+    }],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
