@@ -2,12 +2,15 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "./config.js"; 
 import type { Request, NextFunction, Response } from "express";
 
-interface AuthRequest extends Request {
-  userId: string;
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+    }
+  }
 }
-
 export async function authMiddleware(
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) {
