@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { Content, User } from "./db.js";
 import { JWT_SECRET } from "./config.js";
 import { authMiddleware } from "./middleware.js";
+import mongoose from "mongoose";
 
 const app = express();
 app.use(express.json());
@@ -112,6 +113,30 @@ app.post('/api/v1/content', authMiddleware ,async (req,res) => {
     })
 
 })
+
+app.get('/api/v1/content', authMiddleware, async (req, res) => {
+  try {
+    if (!req.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const content = await Content.find({
+      userId: new mongoose.Types.ObjectId(req.userId)
+    }).populate("userId", "username")
+
+    //without extra sb call u wan to access the author of the added content we use populate("reference", "values_u_want_to_select")
+
+    res.status(200).json({
+      message: "Content successfully accessed",
+      content
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      message: "Error fetching content"
+    });
+  }
+});
 
 const PORT = 3000;
 app.listen(PORT , ()=> {
