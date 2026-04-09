@@ -1,9 +1,10 @@
-import express from "express"
+import express, { type Request } from "express"
 import cors from 'cors'
 import zod from 'zod'
 import jwt from 'jsonwebtoken'
-import { User } from "./db.js";
+import { Content, User } from "./db.js";
 import { JWT_SECRET } from "./config.js";
+import { authMiddleware } from "./middleware.js";
 
 const app = express();
 app.use(express.json());
@@ -75,6 +76,39 @@ app.post('/api/v1/signin', async (req,res) => {
     res.status(200).json({
         message: "User logged in successfully",
         token: token
+    })
+
+})
+
+const contentSchema = zod.object({
+  link: zod.string(),
+  title: zod.string(),
+});
+
+app.post('/api/v1/content', authMiddleware ,async (req,res) => {
+    const parsed = contentSchema.safeParse(req.body);
+    const {link,title}= req.body;
+
+    if(!parsed.success){
+        return res.status(411).json({
+            message: "Invalid content type"
+        })
+    }
+
+    if (!req.userId) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  }
+
+    const newContent = await Content.create({
+        link,
+        title,
+        userId: req.userId,
+    })
+
+    res.status(200).json({
+        message: "New content added successfully",
     })
 
 })
