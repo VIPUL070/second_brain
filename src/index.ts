@@ -138,6 +138,35 @@ app.get('/api/v1/content', authMiddleware, async (req, res) => {
   }
 });
 
+app.post('/api/v1/delete', authMiddleware, async (req, res) => {
+  try {
+    const { contentId } = req.body;
+
+    if (!req.userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!contentId) {
+      return res.status(400).json({ message: "contentId required" });
+    }
+
+    const result = await Content.deleteOne({
+      _id: new mongoose.Types.ObjectId(contentId),
+      userId: new mongoose.Types.ObjectId(req.userId)
+    });
+
+    res.status(200).json({
+      message: "Content deleted",
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Error deleting content"
+    });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT , ()=> {
     console.log(`App listening on port: ${PORT}`)
