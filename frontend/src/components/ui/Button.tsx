@@ -10,8 +10,8 @@ export interface ButtonProps {
 }
 
 const variantStyles = {
-  primary: "bg-purple text-black",
-  secondary: "bg-purple-dark text-primary-font",
+  primary: "bg-purple-dark text-offwhite-font",
+  secondary: "bg-purple text-black",
 };
 
 const sizeStyles = {
@@ -20,7 +20,7 @@ const sizeStyles = {
   lg: "py-3 px-5 text-lg",
 };
 
-const defaultStyles = "rounded-md cursor-pointer";
+const defaultStyles = "rounded-md cursor-pointer px-4 py-2 ";
 
 const Button = (props: ButtonProps) => {
   const { variant, size, title, startIcon, endIcon } = props;

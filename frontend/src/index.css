@@ -1,19 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
   --color-black: #0B0B0B;
   --color-white: #FFFFFF;
 
-  --color-primary-font: #F9FAFB;
-
+  --color-offwhite-font: #F9FAFB;
+  --color-gray-font: #95989c;
+  
+  --color-purple-light: #d9ddee;
   --color-purple: #B39CD0;
   --color-purple-dark: #673AB7;
 
-  --color-gray-dark: #2e2e2e;
-  --color-gray-light: #BFBFBF;
+  --color-gray-100: #eeeeef;
+  --color-gray-200: #e6e9ed;
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  font-family: var(--font-sans);
 }
 
 body {
   color: var(--color-primary-font);
   background-color: var(--color-black);
+  font-family: var(--font-sans);
 }
