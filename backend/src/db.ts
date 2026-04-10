@@ -6,7 +6,7 @@ const URL = process.env.MONGO_URL;
 
 mongoose.connect(`${URL}/brainly`);
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
 
 const contentTypes = ['image', 'video', 'article', 'audio'];
 
-const contentSchema = new mongoose.Schema({
+const ContentSchema = new mongoose.Schema({
     link: {
         type: String,
-        reuired: true
+        required: true
     },
     type: {
         type: String,
@@ -40,12 +40,12 @@ const contentSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        require: true
+        required: true
     }
 
 });
 
-const tagSchema = new mongoose.Schema({
+const TagSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -53,7 +53,7 @@ const tagSchema = new mongoose.Schema({
     }
 });
 
-const linkSchema = new mongoose.Schema({
+const LinkSchema = new mongoose.Schema({
     hash: {
         type: String,
         required: true,
@@ -62,11 +62,11 @@ const linkSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        require: true
+        required: true
     }
 });
 
-export const User = mongoose.model("User", userSchema);
-export const Content = mongoose.model("Content", contentSchema);
-export const Tag = mongoose.model("Tag", tagSchema);
-export const Link = mongoose.model("Link", linkSchema);
+export const User = mongoose.model("User", UserSchema);
+export const Content = mongoose.model("Content", ContentSchema);
+export const Tag = mongoose.model("Tag", TagSchema);
+export const Link = mongoose.model("Link", LinkSchema);
