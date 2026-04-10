@@ -189,7 +189,8 @@ app.post("/api/v1/brain/share", authMiddleware, async (req, res) => {
 
       if (existingLink) {
         return res.status(200).json({
-          message: "/share/" + existingLink.hash,
+          message: "Returned existing hash link",
+          hash: existingLink.hash,
         });
       }
 
@@ -201,7 +202,8 @@ app.post("/api/v1/brain/share", authMiddleware, async (req, res) => {
       });
 
       return res.status(200).json({
-        message: "/share/" + hash,
+        message: "Created new hash link",
+        hash: hash,
       });
     }
 
