@@ -20,6 +20,11 @@ const sizeStyles = {
   lg: "py-3 px-5 text-lg",
 };
 
+const iconStyles = {
+  primary: "text-offwhite-font",
+  secondary: "text-black",
+}
+
 const defaultStyles = "rounded-md cursor-pointer px-4 py-2 ";
 
 const Button = (props: ButtonProps) => {
@@ -30,7 +35,7 @@ const Button = (props: ButtonProps) => {
       className={`${variantStyles[variant]} ${defaultStyles} ${sizeStyles[size]}`}
     >
       <div className="flex items-center">
-        {startIcon ? <div>{startIcon}</div> : null}
+        {startIcon ? <div className={`${iconStyles[variant]}`}>{startIcon}</div> : null}
         <div className="pl-2 pr-2">{title}</div>
         {endIcon ? <div>{endIcon}</div> : null}
       </div>
