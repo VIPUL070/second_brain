@@ -14,7 +14,7 @@ const Card = ({ title, type, link }: CardProps) => {
         <div className="flex justify-between items-center text-md">
           <div className="flex items-center gap-4 text-gray-icon">
             <ShareIcon size="lg" />
-            {title}
+            <div className="text-black">{title}</div>
           </div>
 
           <div className="flex items-center gap-2 text-gray-icon">

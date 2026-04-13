@@ -28,11 +28,12 @@ const iconStyles = {
 const defaultStyles = "rounded-md cursor-pointer px-4 py-2 ";
 
 const Button = (props: ButtonProps) => {
-  const { variant, size, title, startIcon, endIcon } = props;
+  const { variant, size, title, startIcon, endIcon, onClick } = props;
 
   return (
     <button
       className={`${variantStyles[variant]} ${defaultStyles} ${sizeStyles[size]}`}
+      onClick={onClick}
     >
       <div className="flex items-center">
         {startIcon ? <div className={`${iconStyles[variant]}`}>{startIcon}</div> : null}
