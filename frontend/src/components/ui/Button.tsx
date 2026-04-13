@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Loader from "./Loader";
 
 export interface ButtonProps {
   variant: "primary" | "secondary";
@@ -7,6 +8,7 @@ export interface ButtonProps {
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   onClick?: () => void;
+  loading?: boolean;
 }
 
 const variantStyles = {
@@ -23,22 +25,33 @@ const sizeStyles = {
 const iconStyles = {
   primary: "text-offwhite-font",
   secondary: "text-black",
-}
+};
 
 const defaultStyles = "rounded-md cursor-pointer px-4 py-2 ";
 
 const Button = (props: ButtonProps) => {
-  const { variant, size, title, startIcon, endIcon, onClick } = props;
+  const { variant, size, title, startIcon, endIcon, onClick, loading } = props;
 
   return (
     <button
-      className={`${variantStyles[variant]} ${defaultStyles} ${sizeStyles[size]}`}
+      className={`${variantStyles[variant]} ${defaultStyles} ${
+        sizeStyles[size]
+      } ${loading ? "cursor-wait opacity-40 " : ""}`}
+      disabled={loading}
       onClick={onClick}
     >
       <div className="flex items-center">
-        {startIcon ? <div className={`${iconStyles[variant]}`}>{startIcon}</div> : null}
-        <div className="pl-2 pr-2">{title}</div>
-        {endIcon ? <div>{endIcon}</div> : null}
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            {startIcon ? (
+              <div className={`${iconStyles[variant]}`}>{startIcon}</div>
+            ) : null}
+            <div className="pl-2 pr-2">{title}</div>
+            {endIcon ? <div>{endIcon}</div> : null}
+          </>
+        )}
       </div>
     </button>
   );
