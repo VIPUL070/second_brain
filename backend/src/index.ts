@@ -141,7 +141,7 @@ app.get('/api/v1/content', authMiddleware, async (req, res) => {
   }
 });
 
-app.post('/api/v1/delete', authMiddleware, async (req, res) => {
+app.delete('/api/v1/delete', authMiddleware, async (req, res) => {
   try {
     const { contentId } = req.body;
 

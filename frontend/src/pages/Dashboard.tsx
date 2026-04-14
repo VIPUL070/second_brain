@@ -76,9 +76,11 @@ function Dashboard() {
             return (
               <Card
                 key={content?._id}
+                _id={content?._id}
                 title={content?.title}
                 type={content?.type}
                 link={content?.link}
+                refresh={refresh}
               />
             );
           })}
