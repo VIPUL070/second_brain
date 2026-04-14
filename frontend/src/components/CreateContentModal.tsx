@@ -1,7 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import CrossIcon from "../icons/CrossIcon";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
 
 interface modalProps {
   open: boolean;
@@ -10,6 +13,9 @@ interface modalProps {
 
 const CreateContentModal = ({ open, onClose }: modalProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const linkRef = useRef<HTMLInputElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -23,7 +29,44 @@ const CreateContentModal = ({ open, onClose }: modalProps) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onClose,open]);
+  }, [onClose, open]);
+
+  async function addContent() {
+    setIsLoading(true);
+
+    const title = titleRef.current?.value;
+    const link = linkRef.current?.value;
+    const type = link?.startsWith("https://x.com") ? "twitter" : "youtube";
+
+    if (!link || !title) {
+      toast.warning("Fill in all the details!");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      await axios.post(
+        `${BACKEND_URL}/api/v1/content`,
+        {
+          title,
+          link,
+          type,
+        },
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      toast.success("Content added successfully");
+      onClose();
+    } catch {
+      toast.error("Failed to add content");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div>
@@ -43,12 +86,20 @@ const CreateContentModal = ({ open, onClose }: modalProps) => {
             </div>
 
             <div className="flex flex-col gap-12">
-              <Input placeholder={"Title"} />
-              <Input placeholder={"Link"} />
+              <Input placeholder={"Title"} ref={titleRef} />
+              <Input placeholder={"Link"} ref={linkRef} />
             </div>
 
             <div className="mt-auto flex justify-center">
-              <Button variant="primary" size="lg" title="Add content" />
+              <Button
+                variant="primary"
+                size="lg"
+                title="Add content"
+                loading={isLoading}
+                onClick={() => {
+                  addContent();
+                }}
+              />
             </div>
           </div>
         </div>
