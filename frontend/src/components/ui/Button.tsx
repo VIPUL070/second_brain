@@ -36,7 +36,7 @@ const Button = (props: ButtonProps) => {
     <button
       className={`${variantStyles[variant]} ${defaultStyles} ${
         sizeStyles[size]
-      } ${loading ? "cursor-wait opacity-40 " : ""}`}
+      } ${loading ? "opacity-40 " : ""}`}
       disabled={loading}
       onClick={onClick}
     >

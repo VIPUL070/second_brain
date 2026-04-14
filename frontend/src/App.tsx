@@ -4,9 +4,11 @@ import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
+    <>
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" />} />
       <Route path="/signup" element={<Signup />} />
@@ -20,6 +22,8 @@ function App() {
         }
       />
     </Routes>
+    <ToastContainer position="top-center" autoClose={1000} />
+    </>
   );
 }
 
