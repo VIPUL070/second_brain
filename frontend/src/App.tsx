@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
+import SharePage from "./pages/SharePage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/share/:shareLink" element={<SharePage />} />
     </Routes>
     <ToastContainer position="top-center" autoClose={1000} />
     </>

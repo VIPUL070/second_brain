@@ -10,6 +10,9 @@ interface CardProps {
 }
 
 const Card = ({ title, type, link }: CardProps) => {
+
+  async function deleteContent(){
+  }
   return (
     <div>
       <div className="bg-offwhite-font rounded-md shadow-md border-gray-200 p-4 min-w-72 max-w-72 min-h-48 border-r text-black">
@@ -23,7 +26,9 @@ const Card = ({ title, type, link }: CardProps) => {
             <a href={link} target="_blank">
             <ShareIcon size="lg"/>
             </a>
-            <TrashIcon size="lg" />
+            <a onClick={() => {deleteContent()}}>
+              <TrashIcon size="lg"/>
+            </a>
           </div>
         </div>
 

@@ -6,6 +6,9 @@ import PlusIcon from "../icons/PlusIcon";
 import Button from "../components/ui/Button";
 import ShareIcon from "../icons/ShareIcon";
 import Card from "../components/Card";
+import { toast } from "react-toastify";
+import { BACKEND_URL } from "../config";
+import axios from "axios";
 
 interface Content {
   _id: string;
@@ -17,6 +20,27 @@ interface Content {
 function Dashboard() {
   const [open, setOpen] = useState(false);
   const { contents, refresh } = useContent();
+
+  async function shareLink() {
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}/api/v1/brain/share`,
+      { share: true },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
+    await navigator.clipboard.writeText(shareUrl);
+    
+    toast.success("Link copied to clipboard!");
+  } catch (error) {
+    toast.error("Unable to share link");
+    console.error(error);
+  }
+}
 
   return (
     <div>
@@ -30,7 +54,7 @@ function Dashboard() {
             refresh();
           }}
         />
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end gap-4 mb-8">
           <Button
             variant="primary"
             title="Add Content"
@@ -43,10 +67,11 @@ function Dashboard() {
             title="Share brain"
             size="md"
             startIcon={<ShareIcon size="lg" />}
+            onClick={() => {shareLink()}}
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap">
           {contents.map((content:Content) => {
             return (
               <Card

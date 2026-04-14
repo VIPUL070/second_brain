@@ -5,6 +5,7 @@ import Input from "./ui/Input";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { useContent } from "../hooks/useContent";
 
 interface modalProps {
   open: boolean;
@@ -16,6 +17,7 @@ const CreateContentModal = ({ open, onClose }: modalProps) => {
   const titleRef = useRef<HTMLInputElement>(null);
   const linkRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const {refresh}  = useContent();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -60,6 +62,9 @@ const CreateContentModal = ({ open, onClose }: modalProps) => {
       );
 
       toast.success("Content added successfully");
+      if (titleRef.current) titleRef.current.value = "";
+      if (linkRef.current) linkRef.current.value = "";
+      refresh();
       onClose();
     } catch {
       toast.error("Failed to add content");
