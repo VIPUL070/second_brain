@@ -1,6 +1,6 @@
 import express, { type Request } from "express"
 import cors from 'cors'
-import zod, { string } from 'zod'
+import zod from 'zod'
 import jwt from 'jsonwebtoken'
 import { Content, Link, User } from "./db.js";
 import { authMiddleware } from "./middleware.js";
