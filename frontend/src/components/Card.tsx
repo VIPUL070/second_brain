@@ -7,11 +7,11 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 
 interface CardProps {
-  _id: string;
+  _id?: string;
   type: "twitter" | "youtube";
   title: string;
   link: string;
-  refresh: () => void;
+  refresh?: () => void;
   showDelete?: boolean;
 }
 
@@ -27,7 +27,7 @@ const Card = ({ title, type, link, _id ,refresh,showDelete }: CardProps) => {
       });
       
       toast.success("Content Deleted!");
-      refresh(); 
+      refresh?.(); 
     } catch {
       toast.error("Delete failed");
     }
