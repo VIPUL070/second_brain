@@ -5,6 +5,7 @@ import TwitterIcon from "../icons/TwitterIcon";
 import VideoIcon from "../icons/VideoIcon";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { useEffect } from "react";
 
 interface CardProps {
   _id?: string;
@@ -16,6 +17,22 @@ interface CardProps {
 }
 
 const Card = ({ title, type, link, _id ,refresh,showDelete }: CardProps) => {
+
+  useEffect(() => {
+  if (type !== "twitter") return;
+
+  const loadWidget = () => {
+    if ((window as any).twttr?.widgets) {
+      (window as any).twttr.widgets.load();
+    }
+  };
+
+  loadWidget();
+
+  const timeout = setTimeout(loadWidget, 1000);
+
+  return () => clearTimeout(timeout);
+}, [type, link]);
 
  async function deleteContent() {
     try {
