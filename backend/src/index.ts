@@ -1,16 +1,18 @@
 import express, { type Request } from "express"
 import cors from 'cors'
-import zod from 'zod'
+import zod, { string } from 'zod'
 import jwt from 'jsonwebtoken'
 import { Content, Link, User } from "./db.js";
-import { JWT_SECRET } from "./config.js";
 import { authMiddleware } from "./middleware.js";
 import mongoose from "mongoose";
 import { generateRandom } from "./utils.js";
+import { JWT_SECRET } from "./config.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+const PORT = process.env.PORT || 3000;
 
 const signupSchema = zod.object({
   username: zod.string().min(1),
@@ -261,7 +263,7 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
 
 })
 
-const PORT = 3000;
+
 app.listen(PORT, () => {
   console.log(`App listening on port: ${PORT}`)
 })
