@@ -32,7 +32,7 @@ function Dashboard() {
         },
       }
     );
-    const shareUrl = `http://localhost:5173/share/${response.data.hash}`;
+    const shareUrl = `https://second-brain-frontend-u8pd.onrender.com/share/${response.data.hash}`;
     await navigator.clipboard.writeText(shareUrl);
     
     toast.success("Link copied to clipboard!");
